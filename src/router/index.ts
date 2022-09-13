@@ -1,19 +1,32 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import MainPage from '../components/pages/MainPage.vue';
+import { AppRoute } from '../const/routes';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView,
+    path: AppRoute.MAIN,
+    name: 'main',
+    component: MainPage,
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    path: AppRoute.SIGN_IN,
+    name: 'signIn',
+    component: () => import('../components/pages/LoginPage.vue'),
+  },
+  {
+    path: AppRoute.FAVORITES,
+    name: 'favorites',
+    component: () => import('../components/pages/FavoritesHotels.vue'),
+  },
+  {
+    path: AppRoute.OFFER,
+    name: 'hotel',
+    component: () => import('../components/pages/HotelCard.vue'),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    component: () => import('../components/pages/NotFound.vue'),
   },
 ];
 
