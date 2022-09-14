@@ -4,6 +4,13 @@ export interface HotelLocation {
   zoom: number,
 };
 
+export interface HotelHost {
+  id: number,
+  name: string,
+  avatarUrl: string,
+  isPro: boolean,
+};
+
 export interface Hotel {
   bedrooms: number,
   city: {
@@ -12,12 +19,7 @@ export interface Hotel {
   },
   description: string,
   goods: string[],
-  host: {
-    id: number,
-    name: string,
-    avatarUrl: string,
-    isPro: boolean,
-  },
+  host: HotelHost,
   id: 1,
   images: string[],
   isFavorite: boolean,
@@ -29,4 +31,12 @@ export interface Hotel {
   rating: number,
   type: string,
   title: string,
+};
+
+export interface Reviews {
+  comment: string,
+  date: Date,
+  id: number,
+  rating: number,
+  user: HotelHost,
 };

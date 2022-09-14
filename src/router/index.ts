@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: AppRoute.OFFER,
-    name: 'hotel',
+    name: 'hotels',
     component: () => import('../components/pages/HotelCard.vue'),
   },
   {

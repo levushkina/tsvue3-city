@@ -11,7 +11,7 @@
       <span>Premium</span>
     </div>
     <div class="cities__image-wrapper place-card__image-wrapper">
-      <a href="#">
+      <router-link :to="{ name: 'hotels', params: { id: hotel.id }}">
         <img
           :src='hotel.previewImage'
           class="place-card__image"
@@ -19,7 +19,7 @@
           height="200"
           alt="Place image"
         >
-      </a>
+      </router-link>
     </div>
     <div class="place-card__info">
       <div class="place-card__price-wrapper">
@@ -31,12 +31,13 @@
       </div>
       <div class="place-card__rating rating">
         <div class="place-card__stars rating__stars">
-          <span :style="{width: rating}"></span>
-          <span class="visually-hidden">Rating</span>
+          <hotel-rating :rating-value="hotel.rating"></hotel-rating>
         </div>
       </div>
       <h2 class="place-card__name">
-        <a href="#">{{hotel.title}}</a>
+        <router-link :to="{ name: 'hotels', params: { id: hotel.id }}">
+          {{hotel.title}}
+        </router-link>
       </h2>
       <p class="place-card__type">{{hotel.type}}</p>
     </div>
@@ -45,10 +46,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { computed } from '@vue/runtime-core';
-import { convertRatingToPercent } from '../utils/common';
 import BookmarksButton from './BookmarksButton.vue';
 import { Hotel } from '../models';
+import HotelRating from './HotelRating.vue';
 
 export default defineComponent({
   name: 'HotelsListItem',
@@ -60,13 +60,7 @@ export default defineComponent({
   },
   components: {
     BookmarksButton,
-  },
-  setup(props) {
-    const rating = computed(() => convertRatingToPercent(props.hotel.rating));
-
-    return {
-      rating,
-    };
+    HotelRating,
   },
 });
 </script>

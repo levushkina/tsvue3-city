@@ -4,7 +4,7 @@
     <main className="page__main">
       <div className="container">
         <h2>Page not found!</h2>
-        <Link to="/">Back to main page</Link>
+        <router-link :to="{name: 'main'}">Back to main page</router-link>
       </div>
     </main>
     <page-footer></page-footer>

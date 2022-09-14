@@ -3,7 +3,7 @@
     <div class="cities__places-container container">
       <section class="cities__places places">
         <h2 class="visually-hidden">Places</h2>
-        <b class="places__found">{{hotels.length}} places to stay in {{currentCity}}</b>
+        <b class="places__found">{{hotels?.length}} places to stay in {{currentCity}}</b>
         <hotel-sort-form
           :currentSortType="currentSortType"
           @sortOptionChange="$emit('sortOptionChange', $event)"
@@ -11,7 +11,7 @@
         <div class="cities__places-list places__list tabs__content">
           <hotels-list-item
             v-for="hotel in hotels"
-            :key="hotel.id"
+            :key="`hotel-${hotel.id}`"
             :hotel="hotel"
             @onHotelHover="setCurrentHotelId($event)"
           ></hotels-list-item>
