@@ -1,6 +1,7 @@
 <template>
   <article
-    class="cities__place-card place-card"
+    class="place-card"
+    :class="wrapperName"
     @mouseover="$emit('onHotelHover', hotel.id)"
     @focus="$emit('onHotelHover', hotel.id)"
   >
@@ -49,6 +50,7 @@ import { defineComponent, PropType } from 'vue';
 import BookmarksButton from './BookmarksButton.vue';
 import { Hotel } from '../models';
 import HotelRating from './HotelRating.vue';
+import { PlaceCardClassName } from '../const/common';
 
 export default defineComponent({
   name: 'HotelsListItem',
@@ -56,6 +58,12 @@ export default defineComponent({
     hotel: {
       type: Object as PropType<Hotel>,
       required: true,
+    },
+    wrapperName: {
+      type: String,
+      default() {
+        return PlaceCardClassName.DEFAULT;
+      },
     },
   },
   components: {

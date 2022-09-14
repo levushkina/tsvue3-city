@@ -28,8 +28,8 @@ export const PlacesListClassName = {
 };
 
 export const PlaceCardClassName = {
-  NEAR: 'near-places__card',
-  MAIN: 'cities__place-card',
+  NEARBY: 'near-places__card',
+  DEFAULT: 'cities__place-card',
 };
 
 export const AuthorizationStatus = {

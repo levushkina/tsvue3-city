@@ -72,7 +72,10 @@
       <section class="property__map map"></section>
     </section>
     <div class="container">
-      <nearest-hotels></nearest-hotels>
+      <nearby-hotels
+        v-if="nearbyHotels && nearbyHotels.length"
+        :nearbyHotels="nearbyHotels"
+      ></nearby-hotels>
     </div>
   </main>
 </template>
@@ -94,7 +97,7 @@ import PropertyItem from '../PropertyItem.vue';
 import HostInfo from '../HostInfo.vue';
 import HotelReviews from '../HotelReviews.vue';
 import ReviewForm from '../ReviewForm.vue';
-import NearestHotels from '../NearestHotels.vue';
+import NearbyHotels from '../NearbyHotels.vue';
 
 export default defineComponent({
   components: {
@@ -106,7 +109,7 @@ export default defineComponent({
     HostInfo,
     HotelReviews,
     ReviewForm,
-    NearestHotels,
+    NearbyHotels,
   },
   name: 'HotelCard',
   setup() {
@@ -118,10 +121,16 @@ export default defineComponent({
     const hotel = computed(() => store.state.hotels.find((item: Hotel) => item.id === id));
     const images = computed(() => hotel.value.images.slice(0, 6));
     const reviews = ref();
+    const nearbyHotels = ref();
 
     onMounted(async () => {
       await store.dispatch('fetchReviews', id);
       reviews.value = store.state.reviews;
+    });
+
+    onMounted(async () => {
+      await store.dispatch('fetchNearbyHotels', id);
+      nearbyHotels.value = store.state.nearbyHotels;
     });
 
     return {
@@ -129,6 +138,7 @@ export default defineComponent({
       hotel,
       images,
       reviews,
+      nearbyHotels,
     };
   },
 });
