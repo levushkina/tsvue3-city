@@ -1,7 +1,5 @@
 <template>
-  <page-header></page-header>
-  <loading-screen v-if="hotelsIsLoading"></loading-screen>
-  <main v-else class="page__main page__main--property">
+  <main class="page__main page__main--property">
     <section class="property">
       <hotel-gallery :images="images"></hotel-gallery>
       <div class="property__container container">
@@ -69,12 +67,18 @@
           </section>
         </div>
       </div>
-      <section class="property__map map"></section>
+      <section  v-if="nearbyHotels && nearbyHotels.length" class="property__map map">
+        <locations-map
+          :hotels="nearbyHotels"
+          :activeHotel="activeHotel"
+        ></locations-map>
+      </section>
     </section>
     <div class="container">
       <nearby-hotels
         v-if="nearbyHotels && nearbyHotels.length"
         :nearbyHotels="nearbyHotels"
+        @onHotelHover="setCurrentHotelId($event)"
       ></nearby-hotels>
     </div>
   </main>
@@ -83,62 +87,50 @@
 import {
   defineComponent,
   computed,
-  onMounted,
-  ref,
+  PropType,
 } from 'vue';
 import { useStore } from 'vuex';
-import { useRoute } from 'vue-router';
-import PageHeader from '../PageHeader.vue';
-import HotelGallery from '../HotelGallery.vue';
-import LoadingScreen from '../LoadingScreen.vue';
-import { Hotel } from '../../models';
-import HotelRating from '../HotelRating.vue';
-import PropertyItem from '../PropertyItem.vue';
-import HostInfo from '../HostInfo.vue';
-import HotelReviews from '../HotelReviews.vue';
-import ReviewForm from '../ReviewForm.vue';
-import NearbyHotels from '../NearbyHotels.vue';
+import HotelGallery from './HotelGallery.vue';
+import { Hotel } from '../models';
+import HotelRating from './HotelRating.vue';
+import PropertyItem from './PropertyItem.vue';
+import HostInfo from './HostInfo.vue';
+import HotelReviews from './HotelReviews.vue';
+import ReviewForm from './ReviewForm.vue';
+import NearbyHotels from './NearbyHotels.vue';
+import LocationsMap from './LocationsMap.vue';
+import { useActiveHotel } from '../composition/activeHotel';
 
 export default defineComponent({
   components: {
-    PageHeader,
     HotelGallery,
-    LoadingScreen,
     HotelRating,
     PropertyItem,
     HostInfo,
     HotelReviews,
     ReviewForm,
     NearbyHotels,
+    LocationsMap,
   },
   name: 'HotelCard',
-  setup() {
-    const route = useRoute();
-    const id = Number(route.params.id);
+  props: {
+    hotel: {
+      type: Object as PropType<Hotel>,
+      required: true,
+    },
+  },
+  setup(props) {
     const store = useStore();
-    const hotelsIsLoading = computed(() => store.state.loadingInProccess);
 
-    const hotel = computed(() => store.state.hotels.find((item: Hotel) => item.id === id));
-    const images = computed(() => hotel.value.images.slice(0, 6));
-    const reviews = ref();
-    const nearbyHotels = ref();
-
-    onMounted(async () => {
-      await store.dispatch('fetchReviews', id);
-      reviews.value = store.state.reviews;
-    });
-
-    onMounted(async () => {
-      await store.dispatch('fetchNearbyHotels', id);
-      nearbyHotels.value = store.state.nearbyHotels;
-    });
+    const images = computed(() => props.hotel.images.slice(0, 6));
+    const nearbyHotels = computed(() => store.state.nearbyHotels);
+    const reviews = computed(() => store.state.reviews);
 
     return {
-      hotelsIsLoading,
-      hotel,
       images,
       reviews,
       nearbyHotels,
+      ...useActiveHotel(nearbyHotels.value),
     };
   },
 });

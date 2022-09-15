@@ -7,6 +7,7 @@
       :key="`nearby-${hotel.id}`"
       :hotel="hotel"
       :wrapperName="wrapperName"
+      @onHotelHover="$emit('onHotelHover', $event)"
     ></hotels-list-item>
   </div>
 </section>

@@ -9,6 +9,7 @@ export default createStore({
     loadingInProccess: false,
     reviews: [] as Reviews[],
     nearbyHotels: [] as Hotel[],
+    nearbyLoadingInProccess: false,
   },
   mutations: {
     updateHotels(state, hotels: Hotel[]) {
@@ -22,6 +23,9 @@ export default createStore({
     },
     updateNearbyHotels(state, nearbyHotels: Hotel[]) {
       state.nearbyHotels = nearbyHotels;
+    },
+    toggleNearbyLoadingInProccess(state, isLoading) {
+      state.nearbyLoadingInProccess = isLoading;
     },
   },
   actions: {
@@ -38,9 +42,11 @@ export default createStore({
       context.commit('updateReviews', convertSnekeToCamelCase(reviews));
     },
     async fetchNearbyHotels(context, id) {
+      context.commit('toggleNearbyLoadingInProccess', true);
       const res = await fetch(`${BACKEND_URL}${APIRoute.OFFERS}/${id}${APIRoute.NEARBY}`);
       const nearbyHotels = await res.json();
       context.commit('updateNearbyHotels', convertSnekeToCamelCase(nearbyHotels));
+      context.commit('toggleNearbyLoadingInProccess', false);
     },
   },
   getters: {

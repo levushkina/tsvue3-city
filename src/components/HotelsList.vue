@@ -18,10 +18,12 @@
         </div>
       </section>
       <div class="cities__right-section">
-        <locations-map
-          :hotels="hotels"
-          :activeHotel="activeHotel"
-        ></locations-map>
+        <section class="cities__map map">
+          <locations-map
+            :hotels="hotels"
+            :activeHotel="activeHotel"
+          ></locations-map>
+        </section>
       </div>
     </div>
   </div>

@@ -21,5 +21,8 @@ export const sortHotels = (type: string, hotels: Hotel[]) => {
   }
 };
 
-export const getHotelById = (hotels: Hotel[], id: number): Hotel | undefined => hotels
-  .find((hotel: Hotel) => hotel.id === id);
+export const getHotelById = (hotels: Hotel[], id: number): Hotel | undefined => {
+  console.log(hotels);
+  console.log(id);
+  return hotels.find((hotel: Hotel) => hotel.id === id);
+};

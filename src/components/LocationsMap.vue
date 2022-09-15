@@ -1,22 +1,20 @@
 <template>
-  <section class="cities__map map">
-    <l-map
-      :zoom="activeItem.location.zoom"
-      :center="[activeItem.location.latitude, activeItem.location.longitude]"
+  <l-map
+    :zoom="activeItem.location.zoom"
+    :center="[activeItem.location.latitude, activeItem.location.longitude]"
+  >
+    <l-tile-layer
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    ></l-tile-layer>
+    <l-control-layers />
+    <l-marker
+      v-for="hotel in hotels"
+      :key="hotel.id"
+      :lat-lng="[hotel.location.latitude, hotel.location.longitude]"
     >
-      <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      ></l-tile-layer>
-      <l-control-layers />
-      <l-marker
-        v-for="hotel in hotels"
-        :key="hotel.id"
-        :lat-lng="[hotel.location.latitude, hotel.location.longitude]"
-      >
-        <l-icon :icon-url="hotel.id === activeItem.id ? iconUrlCurrent : iconUrl" />
-      </l-marker>
-    </l-map>
-  </section>
+      <l-icon :icon-url="hotel.id === activeItem.id ? iconUrlCurrent : iconUrl" />
+    </l-marker>
+  </l-map>
 </template>
 
 <script>

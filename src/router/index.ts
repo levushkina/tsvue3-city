@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: AppRoute.OFFER,
     name: 'hotels',
-    component: () => import('../components/pages/HotelCard.vue'),
+    component: () => import('../components/pages/HotelPage.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
