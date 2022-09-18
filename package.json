@@ -12,6 +12,8 @@
     "@vue-leaflet/vue-leaflet": "^0.6.1",
     "@vue/runtime-core": "^3.2.39",
     "@vue/runtime-dom": "^3.2.39",
+    "@vuelidate/core": "^2.0.0-alpha.44",
+    "@vuelidate/validators": "^2.0.0-alpha.31",
     "leaflet": "^1.8.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",

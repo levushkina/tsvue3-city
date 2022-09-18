@@ -2,14 +2,14 @@ export interface HotelLocation {
   latitude: number,
   longitude:number,
   zoom: number,
-};
+}
 
 export interface HotelHost {
   id: number,
   name: string,
   avatarUrl: string,
   isPro: boolean,
-};
+}
 
 export interface Hotel {
   bedrooms: number,
@@ -31,7 +31,7 @@ export interface Hotel {
   rating: number,
   type: string,
   title: string,
-};
+}
 
 export interface Reviews {
   comment: string,
@@ -39,4 +39,4 @@ export interface Reviews {
   id: number,
   rating: number,
   user: HotelHost,
-};
+}
